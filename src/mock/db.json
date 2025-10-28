@@ -1,0 +1,257 @@
+{
+  "games": [
+    {
+      "id": "g-001",
+      "sport": "Football",
+      "homeTeam": "FC Warsaw",
+      "awayTeam": "Lech Poznan",
+      "startTime": "2025-10-20T18:30:00Z",
+      "odds": {
+        "homeWin": 2.15,
+        "draw": 3.4,
+        "awayWin": 3.1
+      },
+      "status": "finished"
+    },
+    {
+      "id": "g-002",
+      "sport": "Football",
+      "homeTeam": "Legia Warszawa",
+      "awayTeam": "Cracovia",
+      "startTime": "2025-10-28T16:00:00Z",
+      "odds": {
+        "homeWin": 1.95,
+        "draw": 3.6,
+        "awayWin": 4.2
+      },
+      "status": "live"
+    },
+    {
+      "id": "g-003",
+      "sport": "Basketball",
+      "homeTeam": "Poland Eagles",
+      "awayTeam": "Vilnius Vipers",
+      "startTime": "2025-10-29T19:45:00Z",
+      "odds": {
+        "homeWin": 1.8,
+        "awayWin": 2.05
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-004",
+      "sport": "Tennis",
+      "homeTeam": "A. Novak",
+      "awayTeam": "B. Medvedev",
+      "startTime": "2025-10-27T13:00:00Z",
+      "odds": {
+        "homeWin": 1.6,
+        "awayWin": 2.3
+      },
+      "status": "finished"
+    },
+    {
+      "id": "g-005",
+      "sport": "Hockey",
+      "homeTeam": "Gdansk Sharks",
+      "awayTeam": "Krakow Bears",
+      "startTime": "2025-10-30T18:00:00Z",
+      "odds": {
+        "homeWin": 2.4,
+        "draw": 3.2,
+        "awayWin": 2.8
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-006",
+      "sport": "Football",
+      "homeTeam": "Wroclaw Warriors",
+      "awayTeam": "Poznan Panthers",
+      "startTime": "2025-10-28T15:00:00Z",
+      "odds": {
+        "homeWin": 2.7,
+        "draw": 3,
+        "awayWin": 2.5
+      },
+      "status": "live"
+    },
+    {
+      "id": "g-007",
+      "sport": "Basketball",
+      "homeTeam": "Riga Rockets",
+      "awayTeam": "Baltic Bulls",
+      "startTime": "2025-11-02T20:00:00Z",
+      "odds": {
+        "homeWin": 1.95,
+        "awayWin": 1.95
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-008",
+      "sport": "Football",
+      "homeTeam": "Zaglebie Lubin",
+      "awayTeam": "Radomiak",
+      "startTime": "2025-10-18T12:00:00Z",
+      "odds": {
+        "homeWin": 1.7,
+        "draw": 3.8,
+        "awayWin": 5.5
+      },
+      "status": "finished"
+    },
+    {
+      "id": "g-009",
+      "sport": "Tennis",
+      "homeTeam": "C. Alcaraz",
+      "awayTeam": "J. Sinner",
+      "startTime": "2025-10-31T14:30:00Z",
+      "odds": {
+        "homeWin": 1.85,
+        "awayWin": 2.05
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-010",
+      "sport": "Hockey",
+      "homeTeam": "Katowice Eagles",
+      "awayTeam": "Lodz Lions",
+      "startTime": "2025-10-28T17:30:00Z",
+      "odds": {
+        "homeWin": 2.05,
+        "draw": 3.1,
+        "awayWin": 3.3
+      },
+      "status": "live"
+    },
+    {
+      "id": "g-011",
+      "sport": "Football",
+      "homeTeam": "Widzew Lodz",
+      "awayTeam": "Arka Gdynia",
+      "startTime": "2025-11-05T18:00:00Z",
+      "odds": {
+        "homeWin": 2.2,
+        "draw": 3.3,
+        "awayWin": 3.1
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-012",
+      "sport": "Basketball",
+      "homeTeam": "Warsaw Wolves",
+      "awayTeam": "Gdynia Giants",
+      "startTime": "2025-10-25T19:00:00Z",
+      "odds": {
+        "homeWin": 1.75,
+        "awayWin": 2.1
+      },
+      "status": "finished"
+    },
+    {
+      "id": "g-013",
+      "sport": "Football",
+      "homeTeam": "Stal Mielec",
+      "awayTeam": "Korona Kielce",
+      "startTime": "2025-10-29T16:30:00Z",
+      "odds": {
+        "homeWin": 2,
+        "draw": 3.5,
+        "awayWin": 3.6
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-014",
+      "sport": "Tennis",
+      "homeTeam": "I. Rublev",
+      "awayTeam": "D. Khachanov",
+      "startTime": "2025-10-28T12:00:00Z",
+      "odds": {
+        "homeWin": 2.1,
+        "awayWin": 1.8
+      },
+      "status": "live"
+    },
+    {
+      "id": "g-015",
+      "sport": "Hockey",
+      "homeTeam": "Szczecin Seals",
+      "awayTeam": "Bydgoszcz Bears",
+      "startTime": "2025-11-01T17:00:00Z",
+      "odds": {
+        "homeWin": 2.55,
+        "draw": 3.05,
+        "awayWin": 2.2
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-016",
+      "sport": "Football",
+      "homeTeam": "Sandecja",
+      "awayTeam": "Olimpia Elblag",
+      "startTime": "2025-10-22T15:00:00Z",
+      "odds": {
+        "homeWin": 1.9,
+        "draw": 3.1,
+        "awayWin": 4
+      },
+      "status": "finished"
+    },
+    {
+      "id": "g-017",
+      "sport": "Basketball",
+      "homeTeam": "Lublin Legends",
+      "awayTeam": "Suwalki Spartans",
+      "startTime": "2025-10-28T21:00:00Z",
+      "odds": {
+        "homeWin": 2,
+        "awayWin": 1.85
+      },
+      "status": "live"
+    },
+    {
+      "id": "g-018",
+      "sport": "Football",
+      "homeTeam": "Podbeskidzie",
+      "awayTeam": "Termalica",
+      "startTime": "2025-11-03T14:00:00Z",
+      "odds": {
+        "homeWin": 2.45,
+        "draw": 3.25,
+        "awayWin": 2.65
+      },
+      "status": "upcoming"
+    },
+    {
+      "id": "g-019",
+      "sport": "Tennis",
+      "homeTeam": "S. Tsitsipas",
+      "awayTeam": "F. Tiafoe",
+      "startTime": "2025-10-26T10:00:00Z",
+      "odds": {
+        "homeWin": 1.95,
+        "awayWin": 1.95
+      },
+      "status": "finished"
+    },
+    {
+      "id": "g-020",
+      "sport": "Football",
+      "homeTeam": "Chojniczanka",
+      "awayTeam": "GKS Tychy",
+      "startTime": "2025-10-30T20:30:00Z",
+      "odds": {
+        "homeWin": 3.1,
+        "draw": 3.1,
+        "awayWin": 2.1
+      },
+      "status": "upcoming"
+    }
+  ],
+  "bets": []
+}
