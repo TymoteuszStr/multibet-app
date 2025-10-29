@@ -35,7 +35,6 @@ export function useFetch<T = unknown, B = unknown>(baseUrl: string = BASE_URL) {
         const errData = await res.json().catch(() => null);
         throw new Error(errData?.message || `HTTP error ${res.status}`);
       }
-
       const json: T = await res.json();
       data.value = json;
       return json;
