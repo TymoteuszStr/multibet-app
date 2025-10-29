@@ -3,8 +3,8 @@ import { computed, onMounted, watch } from "vue";
 import { useGameStore } from "@/store/Games";
 import { useFetch } from "@/composables/useFetch";
 import type { Game } from "@/types/Game";
-import { useRouter } from "vue-router";
 import DropDownList from "@/components/shared/DropDownList.vue";
+import { faWifi } from "@fortawesome/free-solid-svg-icons";
 
 const gameStore = useGameStore();
 const games = computed(() => gameStore.games);
@@ -51,6 +51,7 @@ function gameClickHandle(id: string) {
       :items="gamesBySport[sport]?.map((game: Game) => ({
       id: game.id,
       label: `${game.homeTeam} - ${game.awayTeam}`,
+      icon: game.status === 'live' ? faWifi : undefined
     })) || []"
       @item-click="gameClickHandle($event)"
     ></DropDownList>

@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  type IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 interface DropdownItem {
   id: string;
   label: string;
+  icon?: IconDefinition;
 }
 
 interface Props {
@@ -24,24 +28,29 @@ function toggleDropdown() {
 </script>
 
 <template>
-  <div class="dropdown-list">
-    <div class="list-header" @click="toggleDropdown">
+  <div class="dropdown">
+    <div class="dropdown__header" @click="toggleDropdown">
       {{ props.header }}
       <font-awesome-icon
         :icon="faChevronDown"
-        class="icon"
+        class="dropdown__header__icon"
         :class="{ rotated: isOpen }"
       />
     </div>
     <Transition name="dropdown">
-      <ul v-if="isOpen" class="list-content">
+      <ul v-if="isOpen" class="dropdown__list">
         <li
           v-for="item in items"
           :key="item.id"
-          class="list-item"
+          class="dropdown__list__item"
           @click="$emit('item-click', item.id)"
         >
           {{ item.label }}
+          <font-awesome-icon
+            v-if="item.icon"
+            :icon="item.icon"
+            class="dropdown__list__item__icon"
+          />
         </li>
       </ul>
     </Transition>
@@ -49,8 +58,8 @@ function toggleDropdown() {
 </template>
 
 <style scoped lang="scss">
-.dropdown-list {
-  .list-header {
+.dropdown {
+  &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,7 +74,7 @@ function toggleDropdown() {
       background-color: var(--overlay-md);
     }
 
-    .icon {
+    &__icon {
       color: var(--primary);
       margin-left: auto;
       transition: transform 0.3s ease;
@@ -75,18 +84,20 @@ function toggleDropdown() {
       }
     }
   }
-
-  .list-content {
+  &__list {
     list-style: none;
     padding: 0;
     margin: 8px 0 0 0;
     overflow: hidden;
     border-radius: 8px;
 
-    .list-item {
+    &__item {
       padding: 10px 16px;
       cursor: pointer;
       transition: background-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
       &:hover {
         background-color: var(--overlay-sm);
@@ -98,6 +109,11 @@ function toggleDropdown() {
 
       &:last-child {
         padding-bottom: 12px;
+      }
+
+      &__icon {
+        animation: pulse 2s ease-in-out infinite;
+        color: var(--negative);
       }
     }
   }
@@ -133,5 +149,17 @@ function toggleDropdown() {
   opacity: 0;
   max-height: 0;
   transform: translateY(-10px);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 </style>
