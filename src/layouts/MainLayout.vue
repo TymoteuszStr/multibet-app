@@ -29,7 +29,11 @@ onMounted(() => {
     <header class="header">
       <h1>MultiBet</h1>
       <div></div>
-      <div><Button @click="toggleTheme">theme</Button></div>
+      <div>
+        <Button @click="toggleTheme"
+          >Set {{ isDark ? "light" : "dark" }} mode</Button
+        >
+      </div>
     </header>
     <router-view />
   </div>

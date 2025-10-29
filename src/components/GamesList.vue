@@ -4,8 +4,20 @@ import { useGameStore } from "@/store/Games";
 import { useFetch } from "@/composables/useFetch";
 import type { Game } from "@/types/Game";
 import DropDownList from "@/components/shared/DropDownList.vue";
-import { faWifi } from "@fortawesome/free-solid-svg-icons";
+import {
+  faWifi,
+  faFutbolBall,
+  faBasketball,
+  faTableTennisPaddleBall,
+  faHockeyPuck,
+} from "@fortawesome/free-solid-svg-icons";
 
+const sportIcons = {
+  Football: faFutbolBall,
+  Basketball: faBasketball,
+  Tennis: faTableTennisPaddleBall,
+  Hockey: faHockeyPuck,
+};
 const gameStore = useGameStore();
 const games = computed(() => gameStore.games);
 
@@ -47,7 +59,7 @@ function gameClickHandle(id: string) {
     <DropDownList
       v-for="sport in sports"
       :key="sport"
-      :header="sport"
+      :header="{ label: sport, icon: sportIcons[sport as keyof typeof sportIcons] }"
       :items="gamesBySport[sport]?.map((game: Game) => ({
       id: game.id,
       label: `${game.homeTeam} - ${game.awayTeam}`,

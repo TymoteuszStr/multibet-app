@@ -13,13 +13,13 @@ interface DropdownItem {
 }
 
 interface Props {
-  header: string;
+  header: { label: string; icon?: IconDefinition };
   items: DropdownItem[];
 }
 const emit = defineEmits<{
   (e: "item-click", id: string): void;
 }>();
-const props = defineProps<Props>();
+defineProps<Props>();
 const isOpen = ref(true);
 
 function toggleDropdown() {
@@ -30,7 +30,15 @@ function toggleDropdown() {
 <template>
   <div class="dropdown">
     <div class="dropdown__header" @click="toggleDropdown">
-      {{ props.header }}
+      <span class="dropdown__header__label"
+        >{{ header.label }}
+
+        <font-awesome-icon
+          v-if="header.icon"
+          :icon="header.icon"
+          class="dropdown__header__icon"
+        />
+      </span>
       <font-awesome-icon
         :icon="faChevronDown"
         class="dropdown__header__icon"
@@ -69,7 +77,9 @@ function toggleDropdown() {
     transition: background-color 0.2s ease;
     font-weight: 600;
     font-size: 1.2rem;
-    color: var(--primary);
+    &__label {
+      color: var(--primary);
+    }
     &:hover {
       background-color: var(--overlay-md);
     }
