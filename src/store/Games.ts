@@ -4,12 +4,23 @@ import type { Game } from "@/types/Game";
 
 export const useGameStore = defineStore("games", () => {
   const games = ref<Game[]>([]);
-  const currentlyPreviewedGame = ref<Game | null>(null);
+  const currentlyPreviewedGames = ref<Game[]>([]);
   function setGames(newGames: Game[]) {
     games.value = newGames;
   }
-  function setCurrentlyPreviewedGame(newGame: Game) {
-    currentlyPreviewedGame.value = newGame;
+  function toggleCurrentlyPreviewedGames(newGame: Game) {
+    if (currentlyPreviewedGames.value.find((game) => game.id === newGame.id)) {
+      currentlyPreviewedGames.value = currentlyPreviewedGames.value.filter(
+        (game) => game.id !== newGame.id
+      );
+    } else {
+      currentlyPreviewedGames.value.push(newGame);
+    }
   }
-  return { games, setGames, currentlyPreviewedGame, setCurrentlyPreviewedGame };
+  return {
+    games,
+    setGames,
+    currentlyPreviewedGames,
+    toggleCurrentlyPreviewedGames,
+  };
 });

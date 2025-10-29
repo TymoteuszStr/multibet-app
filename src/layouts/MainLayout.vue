@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import Button from "@/components/shared/Button.vue";
 
 const isDark = ref(false);
 function toggleTheme() {
@@ -28,11 +29,7 @@ onMounted(() => {
     <header class="header">
       <h1>MultiBet</h1>
       <div></div>
-      <div>
-        <button type="button" class="theme-btn" @click="toggleTheme">
-          dark
-        </button>
-      </div>
+      <div><Button @click="toggleTheme">theme</Button></div>
     </header>
     <router-view />
   </div>

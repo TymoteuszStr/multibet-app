@@ -2,6 +2,8 @@
 import GamesList from "@/components/GamesList.vue";
 import { RouterView } from "vue-router";
 import MyBets from "@/components/MyBets.vue";
+import ContainerLayout from "@/layouts/ContainerLayout.vue";
+import MainDashboard from "@/components/MainDashboard.vue";
 
 // const payload = {
 //   selections: [
@@ -25,9 +27,15 @@ import MyBets from "@/components/MyBets.vue";
 </script>
 <template>
   <div class="home-wrapper">
-    <GamesList />
-    <RouterView />
-    <MyBets />
+    <ContainerLayout>
+      <GamesList />
+    </ContainerLayout>
+    <ContainerLayout>
+      <MainDashboard />
+    </ContainerLayout>
+    <ContainerLayout>
+      <MyBets />
+    </ContainerLayout>
   </div>
 </template>
 
@@ -35,5 +43,11 @@ import MyBets from "@/components/MyBets.vue";
 .home-wrapper {
   display: grid;
   grid-template-columns: 400px auto 300px;
+  align-items: start;
+  gap: 0;
+
+  > * {
+    min-height: 200px;
+  }
 }
 </style>

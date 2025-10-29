@@ -1,33 +1,55 @@
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import { computed, TransitionGroup } from "vue";
 import { useGameStore } from "@/store/Games";
-import { useFetch } from "@/composables/useFetch";
-import type { Game } from "@/types/Game";
-import { useRoute } from "vue-router";
+
+import GamePanel from "./GamePanel.vue";
 
 const gameStore = useGameStore();
-const game = computed(() => gameStore.currentlyPreviewedGame);
-const { data, loading, get } = useFetch<Game>();
-const route = useRoute();
-const gameId = computed(() => route.params.id);
-
-watch(gameId, async (currentId) => {
-  if (!currentId) return;
-  const newGame = await get(`/games/${currentId}`);
-  if (!newGame) return;
-  gameStore.setCurrentlyPreviewedGame(newGame);
-});
+const games = computed(() => gameStore.currentlyPreviewedGames);
 </script>
 
 <template>
   <div class="dashboard">
-    <div v-if="game" class="dashboard__content">
-      <div>Status: {{ game?.status }}</div>
-      <h1>{{ game.homeTeam }} - {{ game.awayTeam }}</h1>
-      <h2>{{ game.odds.homeWin }} - {{ game.odds.awayWin }}</h2>
-    </div>
-    <div v-else>Choose game...</div>
+    <TransitionGroup name="game-list" tag="div" class="dashboard__list">
+      <GamePanel
+        v-for="game in games"
+        :key="game.id"
+        :game="game"
+        @close="gameStore.toggleCurrentlyPreviewedGames(game)"
+        class="dashboard__content"
+      />
+    </TransitionGroup>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.dashboard__list {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard__content {
+  margin-bottom: 40px;
+}
+
+.game-list-enter-active {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.game-list-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.game-list-enter-from {
+  opacity: 0;
+  transform: translateX(-30px) scale(0.95);
+}
+
+.game-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px) scale(0.95);
+}
+
+.game-list-move {
+  transition: transform 0.4s ease;
+}
+</style>
