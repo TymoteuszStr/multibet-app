@@ -1,3 +1,20 @@
 :root {
   background-color: var(--secondary);
 }
+.truncate-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.animated-list-enter-active,
+.animated-list-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.animated-list-enter-from,
+.animated-list-leave-to {
+  opacity: 0;
+  transform: translateX(-30px) scale(0.95);
+}

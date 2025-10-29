@@ -4,9 +4,29 @@ import dayjs from "dayjs";
 import BetButtonsPanel from "./BetButtonsPanel.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import Input from "./shared/Input.vue";
+import { ref } from "vue";
+import { useBetsStore } from "@/store/Bets";
 defineProps<{
   game: Game;
 }>();
+const stake = ref(10);
+const betStore = useBetsStore();
+function handleBet(game: Game, betType: "homeWin" | "draw" | "awayWin") {
+  if (game.status === "finished") {
+    //add warinng
+    return;
+  }
+  const odds = game.odds[betType as keyof typeof game.odds] ?? 0;
+  betStore.addBet({
+    id: crypto.randomUUID(),
+    gameId: game.id,
+    betType: betType,
+    stake: stake.value,
+    odds,
+    potentialPayout: stake.value * odds,
+  });
+}
 </script>
 
 <template>
@@ -28,8 +48,9 @@ defineProps<{
     </h1>
 
     <div class="game__bets-panel">
-      <BetButtonsPanel :game="game" />
+      <BetButtonsPanel :game="game" @bet="handleBet(game, $event)" />
     </div>
+    <Input v-model="stake" class="game__stake-input" />
   </div>
 </template>
 
@@ -58,6 +79,11 @@ defineProps<{
       margin: 0 15px;
       color: var(--primary);
     }
+  }
+
+  &__stake-input {
+    max-width: 300px;
+    margin: 20px 0 0 auto;
   }
 }
 </style>

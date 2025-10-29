@@ -5,6 +5,10 @@ import type { Game } from "@/types/Game";
 export const useGameStore = defineStore("games", () => {
   const games = ref<Game[]>([]);
   const currentlyPreviewedGames = ref<Game[]>([]);
+  function getGameById(id: string) {
+    const finding = games.value.find((game) => game.id === id);
+    if (finding) return finding;
+  }
   function setGames(newGames: Game[]) {
     games.value = newGames;
   }
@@ -22,5 +26,6 @@ export const useGameStore = defineStore("games", () => {
     setGames,
     currentlyPreviewedGames,
     toggleCurrentlyPreviewedGames,
+    getGameById,
   };
 });

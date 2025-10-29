@@ -2,24 +2,27 @@
 import type { Game } from "@/types/Game";
 import Button from "./shared/Button.vue";
 
-const props = defineProps<{
+defineProps<{
   game: Game;
+}>();
+const emit = defineEmits<{
+  (e: "bet", betType: "homeWin" | "draw" | "awayWin"): void;
 }>();
 </script>
 
 <template>
   <div class="bet-buttons-panel">
-    <Button>
+    <Button @click="$emit('bet', 'homeWin')">
       <p class="team-name">{{ game.homeTeam }}</p>
       <p class="odds">{{ game.odds.homeWin }}</p></Button
     >
-    <Button v-if="game.odds.draw">
+    <Button v-if="game.odds.draw" @click="$emit('bet', 'draw')">
       <p class="team-name">Draw</p>
       <p class="odds">{{ game.odds.draw }}</p>
     </Button>
     <div v-else></div>
 
-    <Button>
+    <Button @click="$emit('bet', 'awayWin')">
       <p class="team-name">{{ game.awayTeam }}</p>
       <p class="odds">{{ game.odds.awayWin }}</p>
     </Button>

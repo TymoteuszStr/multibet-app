@@ -1,6 +1,7 @@
 export type Bet = {
+  id: string;
   gameId: string;
-  betType: "home" | "draw" | "away";
+  betType: "homeWin" | "draw" | "awayWin";
   stake: number;
   odds: number;
   potentialPayout: number;
