@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, TransitionGroup } from "vue";
 import { useGameStore } from "@/store/Games";
-
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import GamePanel from "./GamePanel.vue";
 
 const gameStore = useGameStore();
@@ -10,7 +11,14 @@ const games = computed(() => gameStore.currentlyPreviewedGames);
 
 <template>
   <div class="dashboard">
-    <h2 class="dashboard__title">Games:</h2>
+    <div class="dashboard__header">
+      <h2 class="dashboard__title">Games:</h2>
+      <font-awesome-icon
+        :icon="faTrash"
+        class="dashboard__header__remove"
+        @click="gameStore.removeAllCurrentlyPreviewedGames()"
+      />
+    </div>
     <div v-if="games.length === 0">No games selected</div>
     <TransitionGroup name="animated-list" tag="div" class="dashboard__list">
       <GamePanel
@@ -27,6 +35,20 @@ const games = computed(() => gameStore.currentlyPreviewedGames);
 <style scoped lang="scss">
 .dashboard {
   min-width: 200px;
+  &__header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__remove {
+      cursor: pointer;
+      &:hover {
+        color: var(--muted);
+      }
+    }
+  }
   &__list {
     display: flex;
     flex-direction: column;

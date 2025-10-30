@@ -21,11 +21,16 @@ export const useGameStore = defineStore("games", () => {
       currentlyPreviewedGames.value.unshift(newGame);
     }
   }
+
+  function removeAllCurrentlyPreviewedGames() {
+    currentlyPreviewedGames.value = [];
+  }
   return {
     games,
     setGames,
     currentlyPreviewedGames,
     toggleCurrentlyPreviewedGames,
     getGameById,
+    removeAllCurrentlyPreviewedGames,
   };
 });
