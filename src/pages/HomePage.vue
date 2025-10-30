@@ -42,7 +42,7 @@ import MainDashboard from "@/components/MainDashboard.vue";
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1600px) {
   .home-wrapper {
     grid-template-columns: 320px auto;
     grid-template-areas:
@@ -52,7 +52,7 @@ import MainDashboard from "@/components/MainDashboard.vue";
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 960px) {
   .home-wrapper {
     grid-template-columns: 1fr;
     grid-template-areas:
