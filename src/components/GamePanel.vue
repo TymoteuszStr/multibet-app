@@ -52,7 +52,11 @@ function handleBet(game: Game, betType: "homeWin" | "draw" | "awayWin") {
     <div class="game__bets-panel">
       <BetButtonsPanel :game="game" @bet="handleBet(game, $event)" />
     </div>
-    <Input v-model="stake" class="game__stake-input" />
+    <Input
+      v-if="game.status !== 'finished'"
+      v-model="stake"
+      class="game__stake-input"
+    />
   </div>
 </template>
 

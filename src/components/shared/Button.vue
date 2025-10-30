@@ -10,7 +10,7 @@ defineProps<{
     type="button"
     class="base-btn"
     :class="{ disabled, loading: isLoading }"
-    :disabled="disabled || isLoading"
+    :disabled="isLoading"
   >
     <span v-if="isLoading" class="loader" aria-hidden="true"></span>
     <span v-else><slot /></span>
