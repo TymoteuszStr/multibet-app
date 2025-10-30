@@ -18,7 +18,7 @@ export const useGameStore = defineStore("games", () => {
         (game) => game.id !== newGame.id
       );
     } else {
-      currentlyPreviewedGames.value.push(newGame);
+      currentlyPreviewedGames.value.unshift(newGame);
     }
   }
   return {

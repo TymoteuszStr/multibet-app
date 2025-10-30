@@ -58,6 +58,13 @@ function handleBet(game: Game, betType: "homeWin" | "draw" | "awayWin") {
 
 <style scoped lang="scss">
 .game {
+  border-bottom: 1px solid var(--overlay-md);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
   &__header {
     display: flex;
     align-items: center;

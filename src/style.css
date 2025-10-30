@@ -13,7 +13,9 @@
 .animated-list-leave-active {
   transition: all 0.2s ease-out;
 }
-
+.animated-list-move {
+  transition: transform 0.2s ease-out;
+}
 .animated-list-enter-from,
 .animated-list-leave-to {
   opacity: 0;
