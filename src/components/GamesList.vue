@@ -68,6 +68,14 @@ function gameClickHandle(id: string) {
       @item-click="gameClickHandle($event)"
     ></DropDownList>
   </div>
+  <div v-else-if="loading" class="info">Loading...</div>
+  <div v-else class="info">No games found</div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.info {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+</style>

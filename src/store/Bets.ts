@@ -18,10 +18,14 @@ export const useBetsStore = defineStore("bets", () => {
         : bet
     );
   }
+  function resetBets() {
+    bets.value = [];
+  }
   return {
     bets,
     addBet,
     removeBet,
     changeStake,
+    resetBets,
   };
 });

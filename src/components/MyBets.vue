@@ -5,17 +5,17 @@ import { computed } from "vue";
 import BetPanel from "./BetPanel.vue";
 import { useGameStore } from "@/store/Games";
 import { useFetch } from "@/composables/useFetch";
-import type { Bet } from "@/types/Bet";
 import Cookies from "universal-cookie";
 import TermsModal from "./shared/TermsModal.vue";
 import { ref } from "vue";
 import { ACCEPTED_TERMS_COOKIE_NAME } from "@/assets/constants";
+import { useNotifications } from "@/composables/useNotifications";
 
 const gameStore = useGameStore();
 const betStore = useBetsStore();
 const { post } = useFetch();
 const cookies = new Cookies();
-
+const { addNotification } = useNotifications();
 const bets = computed(() => betStore.bets);
 const total = computed(() => ({
   betsStake: bets.value.reduce((acc, bet) => acc + bet.stake, 0) ?? 0,
@@ -35,23 +35,40 @@ function handleChangeStake(betId: string, newStake: number) {
 }
 
 const showTermsModal = ref(false);
-function handlePlaceBet() {
+async function handlePlaceBet() {
   if (!cookies.get(ACCEPTED_TERMS_COOKIE_NAME)) {
     showTermsModal.value = true;
     return;
   }
-  post("/bets", {
-    bets: bets.value,
-    totalStake: total.value.betsStake,
-    totalPotentialPayout: total.value.potentialPayout,
-    acceptedTerms: true,
-  });
+  try {
+    await post("/bets", {
+      bets: bets.value,
+      totalStake: total.value.betsStake,
+      totalPotentialPayout: total.value.potentialPayout,
+      acceptedTerms: true,
+    });
+    {
+      betStore.resetBets();
+      addNotification({
+        title: "Bet placed",
+        type: "success",
+        description: "Your bet has been placed successfully",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    addNotification({
+      title: "Error",
+      type: "error",
+      description: "Something went wrong",
+    });
+  }
 }
 </script>
 
 <template>
   <div class="bets">
-    <div class="bets__header">Bets: {{ bets.length ?? 0 }}</div>
+    <div class="bets__header">Bets: {{ bets.length ?? "0" }}</div>
     <TransitionGroup name="animated-list" tag="div">
       <BetPanel
         v-for="result in results"
