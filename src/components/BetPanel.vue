@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Bet } from "@/types/Bet";
-import Input from "./shared/Input.vue";
+import Input from "./shared/InputNumber.vue";
 import type { Game } from "@/types/Game";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";

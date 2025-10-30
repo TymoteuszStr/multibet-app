@@ -1,5 +1,11 @@
+<script setup lang="ts">
+defineProps<{
+  disabled?: boolean;
+}>();
+</script>
+
 <template>
-  <button type="button" class="base-btn"><slot /></button>
+  <button type="button" class="base-btn" :class="{ disabled }"><slot /></button>
 </template>
 
 <style scoped lang="scss">

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { computed } from "vue";
 interface Props {
   modelValue?: string | number;
-  type?: string;
   placeholder?: string;
   disabled?: boolean;
 }
@@ -11,8 +9,7 @@ interface Emits {
   (e: "update:modelValue", value: string | number): void;
 }
 
-withDefaults(defineProps<Props>(), {
-  type: "number",
+const props = withDefaults(defineProps<Props>(), {
   placeholder: "",
   disabled: false,
 });
@@ -20,16 +17,60 @@ withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>();
 
 const modelValue = defineModel<string | number>();
+
+function preventInvalidKeys(e: KeyboardEvent) {
+  if (["-", "e", "E", "+"].includes(e.key)) {
+    e.preventDefault();
+    return;
+  }
+
+  if (e.key === "0") {
+    const el = e.target as HTMLInputElement | null;
+    if (!el) return;
+    const cursorAtStart = el.selectionStart === 0 && el.selectionEnd === 0;
+    const emptyBeforeType = el.value.length === 0;
+    if (cursorAtStart || emptyBeforeType) {
+      e.preventDefault();
+    }
+  }
+}
+
+function sanitizeOnInput(e: Event) {
+  const el = e.target as HTMLInputElement;
+  if (!el) return;
+  let value = el.value;
+
+  if (value.startsWith("-")) {
+    value = value.replace(/^-+/, "");
+  }
+
+  if (value.length > 0) {
+    const withoutLeadingZeros = value.replace(/^0+(?=\d)/, "");
+    value = withoutLeadingZeros;
+
+    if (value === "0" || /^0/.test(value) || value.startsWith(".")) {
+      value = "";
+    }
+  }
+
+  el.value = value;
+  (modelValue as any).value = value;
+}
 </script>
 <template>
   <div class="input-wrapper">
     <span class="input__label">Stake:</span>
     <input
       class="base-input"
-      :type="type"
       v-model="modelValue"
-      :placeholder="placeholder"
-      :disabled="disabled"
+      :placeholder="props.placeholder"
+      :disabled="props.disabled"
+      type="number"
+      :min="1"
+      step="any"
+      inputmode="decimal"
+      @keydown="preventInvalidKeys"
+      @input="sanitizeOnInput"
     />
     <span class="currency-icon">€</span>
   </div>
@@ -90,6 +131,7 @@ const modelValue = defineModel<string | number>();
 
   &[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
 
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
