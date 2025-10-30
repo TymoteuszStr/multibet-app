@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import type { Bet } from "@/types/Bet";
+import type { Bet, BetType } from "@/types/Bet";
 import Input from "./shared/InputNumber.vue";
 import type { Game } from "@/types/Game";
-import { watch, onMounted, ref } from "vue";
+import { watch, onMounted, ref, computed } from "vue";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useValidate } from "@/composables/useValidate";
 import { MIN_STAKE } from "@/assets/constants";
 
+const teamKeys: Record<BetType, keyof Game> = {
+  homeWin: "homeTeam" as keyof Game,
+  draw: "draw" as keyof Game,
+  awayWin: "awayTeam" as keyof Game,
+};
 const props = defineProps<{
   bet: Bet;
   game: Game;
@@ -20,7 +25,9 @@ const stake = defineModel<number>("stake");
 
 const { validateStake } = useValidate();
 const lastValidStake = ref<number>(props.bet.stake);
-
+const betTeamName = computed(
+  () => props.game[teamKeys[props.bet.betType]] ?? "draw"
+);
 watch(stake, (value) => {
   const numericValue = Number(value);
   if (validateStake(numericValue)) {
@@ -56,10 +63,14 @@ onMounted(() => {
       class="content__remove"
       @click="$emit('remove')"
     />
-    <div class="truncate-text">
-      {{ `${game?.homeTeam} - ${game?.awayTeam}` }}
+    <div class="content__game-info">
+      <div class="truncate-text">
+        {{ `${game?.homeTeam} - ${game?.awayTeam}` }}
+      </div>
+      <div>
+        Your bet: <span class="content__bet-team-name">{{ betTeamName }}</span>
+      </div>
     </div>
-    <div>Bet: {{ bet.betType }}</div>
     <Input v-model="stake" @change="handleChangeStake" />
   </div>
 </template>
@@ -69,8 +80,10 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-bottom: 20px;
   position: relative;
+  border-bottom: 1px solid var(--overlay-md);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   &__remove {
     position: absolute;
     top: 0;
@@ -81,6 +94,16 @@ onMounted(() => {
     &:hover {
       color: var(--muted);
     }
+  }
+  &__bet-team-name {
+    font-weight: 600;
+    color: var(--primary);
+  }
+  &__game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
   }
 }
 </style>

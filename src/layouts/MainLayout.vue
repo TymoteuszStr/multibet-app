@@ -47,12 +47,9 @@ onMounted(() => {
   grid-template-rows: 50px auto;
   gap: 60px;
   .header {
-    display: grid;
-    grid-template-columns: 200px auto 200px;
-    padding: 0 100px;
-    @media (max-width: 1024px) {
-      padding: 0 20px;
-    }
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 }
 .theme-btn-wrapper {

@@ -10,6 +10,8 @@ import TermsModal from "./shared/TermsModal.vue";
 import { ref } from "vue";
 import { ACCEPTED_TERMS_COOKIE_NAME } from "@/assets/constants";
 import { useNotifications } from "@/composables/useNotifications";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const gameStore = useGameStore();
 const betStore = useBetsStore();
@@ -68,7 +70,14 @@ async function handlePlaceBet() {
 
 <template>
   <div class="bets">
-    <div class="bets__header">Bets: {{ bets.length ?? "0" }}</div>
+    <div class="bets__header">
+      <div>Bets: {{ bets.length ?? "0" }}</div>
+      <font-awesome-icon
+        :icon="faTrash"
+        class="bets__header__remove"
+        @click="betStore.resetBets()"
+      />
+    </div>
     <TransitionGroup name="animated-list" tag="div">
       <BetPanel
         v-for="result in results"
@@ -80,9 +89,15 @@ async function handlePlaceBet() {
       />
     </TransitionGroup>
     <div class="bets__footer">
-      <div>Total stake: {{ total.betsStake }} €</div>
       <div>
-        Potential payout: {{ Math.round(total.potentialPayout * 100) / 100 }}€
+        Total stake:
+        <span class="bets__footer__total-stake">{{ total.betsStake }} €</span>
+      </div>
+      <div>
+        Potential payout:
+        <span class="bets__footer__total-stake">
+          {{ Math.round(total.potentialPayout * 100) / 100 }}€</span
+        >
       </div>
       <Button class="bet-btn" @click="handlePlaceBet">Place a bet</Button>
     </div>
@@ -99,6 +114,16 @@ async function handlePlaceBet() {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__remove {
+      cursor: pointer;
+      &:hover {
+        color: var(--muted);
+      }
+    }
   }
   &__content {
     display: flex;
@@ -110,6 +135,10 @@ async function handlePlaceBet() {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    &__total-stake {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
   }
 }
 </style>
