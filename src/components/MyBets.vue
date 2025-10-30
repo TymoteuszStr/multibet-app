@@ -4,31 +4,18 @@ import Button from "./shared/Button.vue";
 import { computed } from "vue";
 import BetPanel from "./BetPanel.vue";
 import { useGameStore } from "@/store/Games";
-import { useNotifications } from "@/composables/useNotifications";
-import { useValidate } from "@/composables/useValidate";
+import { useFetch } from "@/composables/useFetch";
+import type { Bet } from "@/types/Bet";
+import Cookies from "universal-cookie";
+import TermsModal from "./shared/TermsModal.vue";
+import { ref } from "vue";
+import { ACCEPTED_TERMS_COOKIE_NAME } from "@/assets/constants";
 
-// const payload = {
-//   selections: [
-//     {
-//       gameId: "g-001",
-//       betType: "home",
-//       stake: 10,
-//       odds: 2.15,
-//       potentialPayout: 21.5,
-//     },
-//   ],
-//   totalStake: 10,
-//   totalPotentialPayout: 21.5,
-//   acceptedTerms: true,
-// };
-// async function sendBet() {
-//   const { get, post } = useFetch();
-//   const resp = await get("/games");
-//   console.log(resp);
-// }
 const gameStore = useGameStore();
 const betStore = useBetsStore();
-const { addNotification } = useNotifications();
+const { post } = useFetch();
+const cookies = new Cookies();
+
 const bets = computed(() => betStore.bets);
 const total = computed(() => ({
   betsStake: bets.value.reduce((acc, bet) => acc + bet.stake, 0) ?? 0,
@@ -47,11 +34,17 @@ function handleChangeStake(betId: string, newStake: number) {
   betStore.changeStake(betId, newStake);
 }
 
+const showTermsModal = ref(false);
 function handlePlaceBet() {
-  addNotification({
-    title: "helo test",
-    type: "error",
-    description: "This is a description",
+  if (!cookies.get(ACCEPTED_TERMS_COOKIE_NAME)) {
+    showTermsModal.value = true;
+    return;
+  }
+  post("/bets", {
+    bets: bets.value,
+    totalStake: total.value.betsStake,
+    totalPotentialPayout: total.value.potentialPayout,
+    acceptedTerms: true,
   });
 }
 </script>
@@ -77,6 +70,7 @@ function handlePlaceBet() {
       <Button class="bet-btn" @click="handlePlaceBet">Place a bet</Button>
     </div>
   </div>
+  <TermsModal v-model="showTermsModal" />
 </template>
 
 <style scoped lang="scss">

@@ -253,5 +253,266 @@
       "status": "upcoming"
     }
   ],
-  "bets": []
+  "bets": [
+    {
+      "bets": [
+        {
+          "id": "a6e6b200-7206-428b-b1c6-ca04893fcbce",
+          "gameId": "g-006",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 2.5,
+          "potentialPayout": 2.5
+        },
+        {
+          "id": "efec8f25-1c14-4064-9435-9a6be92600df",
+          "gameId": "g-006",
+          "betType": "homeWin",
+          "stake": 1,
+          "odds": 2.7,
+          "potentialPayout": 2.7
+        }
+      ],
+      "totalStake": 2,
+      "totalPotentialPayout": 5.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-006",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 2.5,
+          "potentialPayout": 2.5
+        },
+        {
+          "gameId": "g-006",
+          "betType": "homeWin",
+          "stake": 1,
+          "odds": 2.7,
+          "potentialPayout": 2.7
+        }
+      ],
+      "totalStake": 2,
+      "totalPotentialPayout": 5.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-002",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 4.2,
+          "potentialPayout": 4.2
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 4.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-002",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 4.2,
+          "potentialPayout": 4.2
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 4.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-002",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 4.2,
+          "potentialPayout": 4.2
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 4.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-006",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 2.5,
+          "potentialPayout": 2.5
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 2.5,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-006",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 2.5,
+          "potentialPayout": 2.5
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 2.5,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-006",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 2.5,
+          "potentialPayout": 2.5
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 2.5,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-006",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 2.5,
+          "potentialPayout": 2.5
+        },
+        {
+          "gameId": "g-006",
+          "betType": "homeWin",
+          "stake": 1,
+          "odds": 2.7,
+          "potentialPayout": 2.7
+        }
+      ],
+      "totalStake": 2,
+      "totalPotentialPayout": 5.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "gameId": "g-006",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 2.5,
+          "potentialPayout": 2.5
+        },
+        {
+          "gameId": "g-006",
+          "betType": "homeWin",
+          "stake": 1,
+          "odds": 2.7,
+          "potentialPayout": 2.7
+        }
+      ],
+      "totalStake": 2,
+      "totalPotentialPayout": 5.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "id": "e5363183-e5ca-4871-8529-b5ec3758f757",
+          "gameId": "g-002",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 4.2,
+          "potentialPayout": 4.2
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 4.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [
+        {
+          "id": "e5363183-e5ca-4871-8529-b5ec3758f757",
+          "gameId": "g-002",
+          "betType": "awayWin",
+          "stake": 1,
+          "odds": 4.2,
+          "potentialPayout": 4.2
+        }
+      ],
+      "totalStake": 1,
+      "totalPotentialPayout": 4.2,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    },
+    {
+      "bets": [],
+      "totalStake": 0,
+      "totalPotentialPayout": 0,
+      "acceptedTerms": true
+    }
+  ]
 }
