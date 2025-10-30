@@ -2,7 +2,6 @@ import type { RouteRecordRaw } from "vue-router";
 
 const MenuLayout = () => import("@/layouts/MainLayout.vue");
 const HomePage = () => import("@/pages/HomePage.vue");
-const MainDashboard = () => import("@/components/MainDashboard.vue");
 
 const routes: RouteRecordRaw[] = [
   {
@@ -15,10 +14,6 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
-  // {
-  //   path: "/:catchAll(.*)*",
-  //   component: ErrorNotFoundPage,
-  // },
 ];
 
 export default routes;
