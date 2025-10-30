@@ -13,11 +13,15 @@ import { useNotifications } from "@/composables/useNotifications";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+const cookies = new Cookies();
 const gameStore = useGameStore();
 const betStore = useBetsStore();
 const { post } = useFetch();
-const cookies = new Cookies();
 const { addNotification } = useNotifications();
+const buttonText = ref("Place a bet");
+const showTermsModal = ref(false);
+const isLoading = ref(false);
+
 const bets = computed(() => betStore.bets);
 const total = computed(() => ({
   betsStake: bets.value.reduce((acc, bet) => acc + bet.stake, 0) ?? 0,
@@ -36,34 +40,39 @@ function handleChangeStake(betId: string, newStake: number) {
   betStore.changeStake(betId, newStake);
 }
 
-const showTermsModal = ref(false);
 async function handlePlaceBet() {
   if (!cookies.get(ACCEPTED_TERMS_COOKIE_NAME)) {
     showTermsModal.value = true;
     return;
   }
+  if (isLoading.value || bets.value.length === 0) return;
   try {
+    buttonText.value = "Place a bet";
+    isLoading.value = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await post("/bets", {
       bets: bets.value,
       totalStake: total.value.betsStake,
       totalPotentialPayout: total.value.potentialPayout,
       acceptedTerms: true,
     });
-    {
-      betStore.resetBets();
-      addNotification({
-        title: "Bet placed",
-        type: "success",
-        description: "Your bet has been placed successfully",
-      });
-    }
+    betStore.resetBets();
+
+    addNotification({
+      title: "Bet placed",
+      type: "success",
+      description: "Your bet has been placed successfully",
+    });
   } catch (error) {
     console.error(error);
     addNotification({
       title: "Error",
       type: "error",
-      description: "Something went wrong",
+      description: "Something went wrong, try again...",
     });
+    buttonText.value = "Retry";
+  } finally {
+    isLoading.value = false;
   }
 }
 </script>
@@ -99,7 +108,14 @@ async function handlePlaceBet() {
           {{ Math.round(total.potentialPayout * 100) / 100 }}€</span
         >
       </div>
-      <Button class="bet-btn" @click="handlePlaceBet">Place a bet</Button>
+
+      <Button
+        class="bet-btn"
+        @click="handlePlaceBet"
+        :disabled="isLoading || bets.length === 0"
+        :isLoading="isLoading"
+        >{{ buttonText }}</Button
+      >
     </div>
   </div>
   <TermsModal v-model="showTermsModal" />

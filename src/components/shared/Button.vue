@@ -1,11 +1,20 @@
 <script setup lang="ts">
 defineProps<{
   disabled?: boolean;
+  isLoading?: boolean;
 }>();
 </script>
 
 <template>
-  <button type="button" class="base-btn" :class="{ disabled }"><slot /></button>
+  <button
+    type="button"
+    class="base-btn"
+    :class="{ disabled, loading: isLoading }"
+    :disabled="disabled || isLoading"
+  >
+    <span v-if="isLoading" class="loader" aria-hidden="true"></span>
+    <span v-else><slot /></span>
+  </button>
 </template>
 
 <style scoped lang="scss">
@@ -52,6 +61,30 @@ defineProps<{
   &.disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  &.loading {
+    cursor: progress;
+  }
+
+  .loader {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: var(--primary-contrast, #fff);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
