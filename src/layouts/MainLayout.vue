@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import Button from "@/components/shared/Button.vue";
+import { onMounted, ref, watch } from "vue";
+import ToggleBtn from "@/components/shared/ToggleBtn.vue";
 
 const isDark = ref(false);
 function toggleTheme() {
-  isDark.value = !isDark.value;
   localStorage.setItem("theme", isDark.value ? "dark" : "light");
   document.documentElement.classList.toggle("dark-theme", isDark.value);
   document.documentElement.classList.toggle("light-theme", !isDark.value);
 }
+
+watch(isDark, () => {
+  toggleTheme();
+});
 onMounted(() => {
   const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const saved = localStorage.getItem("theme");
@@ -29,10 +32,9 @@ onMounted(() => {
     <header class="header">
       <h1>MultiBet</h1>
       <div></div>
-      <div>
-        <Button @click="toggleTheme"
-          >Set {{ isDark ? "light" : "dark" }} mode</Button
-        >
+      <div class="theme-btn-wrapper">
+        <span>Mode: </span>
+        <ToggleBtn v-model="isDark" />
       </div>
     </header>
     <router-view />
@@ -47,7 +49,17 @@ onMounted(() => {
   .header {
     display: grid;
     grid-template-columns: 200px auto 200px;
+    padding: 0 100px;
+    @media (max-width: 1024px) {
+      padding: 0 20px;
+    }
   }
+}
+.theme-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
 }
 .theme-btn {
   background-color: var(--primary);

@@ -46,8 +46,8 @@ import MainDashboard from "@/components/MainDashboard.vue";
   .home-wrapper {
     grid-template-columns: 320px auto;
     grid-template-areas:
-      "left center"
-      "right right";
+      "right right"
+      "left center";
     gap: 16px;
   }
 }

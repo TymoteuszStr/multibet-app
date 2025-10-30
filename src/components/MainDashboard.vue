@@ -24,6 +24,7 @@ const games = computed(() => gameStore.currentlyPreviewedGames);
 
 <style scoped lang="scss">
 .dashboard {
+  min-width: 400px;
   &__list {
     display: flex;
     flex-direction: column;
