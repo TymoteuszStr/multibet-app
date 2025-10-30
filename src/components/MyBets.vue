@@ -4,6 +4,8 @@ import Button from "./shared/Button.vue";
 import { computed } from "vue";
 import BetPanel from "./BetPanel.vue";
 import { useGameStore } from "@/store/Games";
+import { useNotifications } from "@/composables/useNotifications";
+
 // const payload = {
 //   selections: [
 //     {
@@ -25,6 +27,7 @@ import { useGameStore } from "@/store/Games";
 // }
 const gameStore = useGameStore();
 const betStore = useBetsStore();
+const { addNotification } = useNotifications();
 const bets = computed(() => betStore.bets);
 const total = computed(() => ({
   betsStake: bets.value.reduce((acc, bet) => acc + bet.stake, 0) ?? 0,
@@ -37,6 +40,14 @@ const results = computed(() =>
 );
 function handleRemoveBet(gameId: string) {
   betStore.removeBet(gameId);
+}
+
+function handlePlaceBet() {
+  addNotification({
+    title: "helo test",
+    type: "error",
+    description: "This is a description",
+  });
 }
 </script>
 
@@ -55,7 +66,7 @@ function handleRemoveBet(gameId: string) {
     <div class="bets__footer">
       <div>Total stake: {{ total.betsStake }} €</div>
       <div>Potential payout: {{ total.potentialPayout }}€</div>
-      <Button class="bet-btn">Place a bet</Button>
+      <Button class="bet-btn" @click="handlePlaceBet">Place a bet</Button>
     </div>
   </div>
 </template>
