@@ -7,22 +7,17 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Input from "./shared/InputNumber.vue";
 import { ref } from "vue";
 import { useBetsStore } from "@/store/Bets";
-import { useNotifications } from "@/composables/useNotifications";
+import { useValidate } from "@/composables/useValidate";
 defineProps<{
   game: Game;
 }>();
-const stake = ref(10);
+const stake = ref(1);
 const betStore = useBetsStore();
-const { addNotification } = useNotifications();
+const { validateBet, validateStake, validateGame } = useValidate();
 function handleBet(game: Game, betType: "homeWin" | "draw" | "awayWin") {
-  if (game.status === "finished") {
-    addNotification({
-      title: "Game is finished",
-      type: "warning",
-      description: "You can't place a bet",
-    });
-    return;
-  }
+  if (!validateGame(game)) return;
+  if (!validateStake(stake.value)) return;
+  if (!validateBet(game, betType)) return;
 
   const odds = game.odds[betType as keyof typeof game.odds] ?? 0;
   betStore.addBet({

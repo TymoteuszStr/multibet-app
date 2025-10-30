@@ -11,9 +11,17 @@ export const useBetsStore = defineStore("bets", () => {
   function removeBet(betId: string) {
     bets.value = bets.value.filter((bet) => bet.id !== betId);
   }
+  function changeStake(betId: string, newStake: number) {
+    bets.value = bets.value.map((bet) =>
+      bet.id === betId
+        ? { ...bet, stake: newStake, potentialPayout: newStake * bet.odds }
+        : bet
+    );
+  }
   return {
     bets,
     addBet,
     removeBet,
+    changeStake,
   };
 });

@@ -5,6 +5,7 @@ import { computed } from "vue";
 import BetPanel from "./BetPanel.vue";
 import { useGameStore } from "@/store/Games";
 import { useNotifications } from "@/composables/useNotifications";
+import { useValidate } from "@/composables/useValidate";
 
 // const payload = {
 //   selections: [
@@ -42,6 +43,10 @@ function handleRemoveBet(gameId: string) {
   betStore.removeBet(gameId);
 }
 
+function handleChangeStake(betId: string, newStake: number) {
+  betStore.changeStake(betId, newStake);
+}
+
 function handlePlaceBet() {
   addNotification({
     title: "helo test",
@@ -61,11 +66,14 @@ function handlePlaceBet() {
         :bet="result.bet"
         :game="result.game!"
         @remove="handleRemoveBet(result.bet.id)"
+        @update:stake="handleChangeStake(result.bet.id, $event)"
       />
     </TransitionGroup>
     <div class="bets__footer">
       <div>Total stake: {{ total.betsStake }} €</div>
-      <div>Potential payout: {{ total.potentialPayout }}€</div>
+      <div>
+        Potential payout: {{ Math.round(total.potentialPayout * 100) / 100 }}€
+      </div>
       <Button class="bet-btn" @click="handlePlaceBet">Place a bet</Button>
     </div>
   </div>

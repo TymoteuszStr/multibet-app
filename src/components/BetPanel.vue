@@ -2,13 +2,51 @@
 import type { Bet } from "@/types/Bet";
 import Input from "./shared/InputNumber.vue";
 import type { Game } from "@/types/Game";
+import { watch, onMounted, ref } from "vue";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useValidate } from "@/composables/useValidate";
+import { MIN_STAKE } from "@/assets/constants";
 
-defineProps<{
+const props = defineProps<{
   bet: Bet;
   game: Game;
 }>();
+const emit = defineEmits<{
+  (e: "update:stake", value: number): void;
+  (e: "remove"): void;
+}>();
+const stake = defineModel<number>("stake");
+
+const { validateStake } = useValidate();
+const lastValidStake = ref<number>(props.bet.stake);
+
+watch(stake, (value) => {
+  const numericValue = Number(value);
+  if (validateStake(numericValue)) {
+    lastValidStake.value = numericValue;
+    emit("update:stake", numericValue);
+  } else {
+    if (!value || Number.isNaN(numericValue) || numericValue <= 0) {
+      if (stake.value !== MIN_STAKE) {
+        stake.value = MIN_STAKE;
+        lastValidStake.value = MIN_STAKE;
+        emit("update:stake", MIN_STAKE);
+      }
+    } else if (stake.value !== lastValidStake.value) {
+      stake.value = lastValidStake.value;
+    }
+  }
+});
+function handleChangeStake(value: number) {
+  if (!validateStake(Number(value))) return;
+}
+onMounted(() => {
+  if (stake.value == null) {
+    stake.value = props.bet.stake;
+  }
+  lastValidStake.value = Number(stake.value ?? props.bet.stake);
+});
 </script>
 
 <template>
@@ -22,7 +60,7 @@ defineProps<{
       {{ `${game?.homeTeam} - ${game?.awayTeam}` }}
     </div>
     <div>Bet: {{ bet.betType }}</div>
-    <Input type="number" v-model="bet.stake" />
+    <Input v-model="stake" @change="handleChangeStake" />
   </div>
 </template>
 
