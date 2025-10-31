@@ -23,7 +23,7 @@ describe("InputNumber.vue", () => {
     expect(prevent2).toHaveBeenCalledOnce();
   });
 
-  it("removes leading zeros and disallows starting with '.'", async () => {
+  it("no allow but 0 and , or . from user", async () => {
     const wrapper = shallowMount(InputNumber, { props: { modelValue: "" } });
     const input = wrapper.get("input");
     (input.element as HTMLInputElement).value = "0005";
@@ -32,10 +32,10 @@ describe("InputNumber.vue", () => {
 
     (input.element as HTMLInputElement).value = ".5";
     await input.trigger("input");
-    expect((input.element as HTMLInputElement).value).toBe("");
+    expect((input.element as HTMLInputElement).value).toBe("5");
 
     (input.element as HTMLInputElement).value = "0";
     await input.trigger("input");
-    expect((input.element as HTMLInputElement).value).toBe("");
+    expect((input.element as HTMLInputElement).value).toBe("1");
   });
 });
