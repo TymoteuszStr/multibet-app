@@ -29,6 +29,9 @@ function handleBet(game: Game, betType: "homeWin" | "draw" | "awayWin") {
     potentialPayout: stake.value * odds,
   });
 }
+function handleChangeStake(value: string | number) {
+  if (!validateStake(Number(value))) return;
+}
 </script>
 
 <template>
@@ -56,6 +59,7 @@ function handleBet(game: Game, betType: "homeWin" | "draw" | "awayWin") {
       v-if="game.status !== 'finished'"
       v-model="stake"
       class="game__stake-input"
+      @update:modelValue="handleChangeStake($event)"
     />
   </div>
 </template>
