@@ -4,6 +4,7 @@ import { useGameStore } from "@/store/Games";
 import { useFetch } from "@/composables/useFetch";
 import type { Game } from "@/types/Game";
 import DropDownList from "@/components/shared/DropDownList.vue";
+import FilterSelect from "@/components/shared/FilterSelect.vue";
 import {
   faWifi,
   faFutbolBall,
@@ -22,6 +23,13 @@ const gameStore = useGameStore();
 const games = computed(() => gameStore.games);
 
 const statusFilter = ref<"all" | Game["status"]>("all");
+
+const statusOptions = [
+  { value: "all", label: "All" },
+  { value: "upcoming", label: "Upcoming" },
+  { value: "live", label: "Live" },
+  { value: "finished", label: "Finished" },
+];
 
 const filteredGames = computed(() => {
   if (statusFilter.value === "all") return games.value;
@@ -64,15 +72,12 @@ function gameClickHandle(id: string) {
 </script>
 
 <template>
-  <div class="filters">
-    <label for="statusFilter">Status:</label>
-    <select id="statusFilter" v-model="statusFilter">
-      <option value="all">All</option>
-      <option value="upcoming">Upcoming</option>
-      <option value="live">Live</option>
-      <option value="finished">Finished</option>
-    </select>
-  </div>
+  <FilterSelect
+    v-model="statusFilter"
+    label="Status"
+    :options="statusOptions"
+    id="statusFilter"
+  />
   <div v-if="filteredGames.length !== 0" class="list-wrapper">
     <DropDownList
       v-for="sport in sports"
@@ -91,25 +96,6 @@ function gameClickHandle(id: string) {
 </template>
 
 <style scoped lang="scss">
-.filters {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-left: 10px;
-  label {
-    font-weight: 600;
-  }
-  select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--overlay-md);
-    background: var(--surface);
-    color: var(--text);
-    &:focus {
-      outline: none;
-    }
-  }
-}
 .info {
   font-size: 1.2rem;
   font-weight: 600;

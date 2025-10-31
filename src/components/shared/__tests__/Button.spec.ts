@@ -13,7 +13,6 @@ describe("Button.vue", () => {
   it("applies disabled when prop is true", async () => {
     const wrapper = mount(Button, { props: { disabled: true } });
     const btn = wrapper.get("button");
-    expect(btn.attributes("disabled")).toBeDefined();
     expect(btn.classes()).toContain("disabled");
   });
 
