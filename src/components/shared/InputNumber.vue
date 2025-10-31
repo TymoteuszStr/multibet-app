@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+
 interface Props {
   modelValue?: string | number;
   placeholder?: string;
   disabled?: boolean;
+  showIncrementButtons?: boolean;
 }
 
 interface Emits {
@@ -12,6 +16,7 @@ interface Emits {
 const props = withDefaults(defineProps<Props>(), {
   placeholder: "",
   disabled: false,
+  showIncrementButtons: true,
 });
 
 const emit = defineEmits<Emits>();
@@ -19,7 +24,7 @@ const emit = defineEmits<Emits>();
 const modelValue = defineModel<string | number>();
 
 function preventInvalidKeys(e: KeyboardEvent) {
-  if (["-", "e", "E", "+"].includes(e.key)) {
+  if (["-", "e", "E", "+", ".", ","].includes(e.key)) {
     e.preventDefault();
     return;
   }
@@ -44,11 +49,14 @@ function sanitizeOnInput(e: Event) {
     value = value.replace(/^-+/, "");
   }
 
+  // Remove dots and commas (decimal separators)
+  value = value.replace(/[.,]/g, "");
+
   if (value.length > 0) {
     const withoutLeadingZeros = value.replace(/^0+(?=\d)/, "");
     value = withoutLeadingZeros;
 
-    if (value === "0" || /^0/.test(value) || value.startsWith(".")) {
+    if (value === "0" || /^0/.test(value)) {
       value = "";
     }
   }
@@ -56,9 +64,36 @@ function sanitizeOnInput(e: Event) {
   el.value = value;
   (modelValue as any).value = value;
 }
+
+function increment() {
+  if (props.disabled) return;
+  const currentValue = Number(modelValue.value) || 0;
+  const newValue = currentValue + 1;
+  (modelValue as any).value = newValue;
+  emit("update:modelValue", newValue);
+}
+
+function decrement() {
+  if (props.disabled) return;
+  const currentValue = Number(modelValue.value) || 1;
+  const minValue = 1;
+  const newValue = Math.max(minValue, currentValue - 1);
+  (modelValue as any).value = newValue;
+  emit("update:modelValue", newValue);
+}
 </script>
 <template>
   <div class="input-wrapper">
+    <button
+      v-if="props.showIncrementButtons"
+      class="increment-btn increment-btn--minus"
+      :disabled="props.disabled"
+      @click="decrement"
+      type="button"
+      aria-label="Decrease value"
+    >
+      <font-awesome-icon :icon="faMinus" />
+    </button>
     <span class="input__label">Stake:</span>
     <input
       class="base-input"
@@ -67,12 +102,22 @@ function sanitizeOnInput(e: Event) {
       :disabled="props.disabled"
       type="number"
       :min="1"
-      step="any"
-      inputmode="decimal"
+      step="1"
+      inputmode="numeric"
       @keydown="preventInvalidKeys"
       @input="sanitizeOnInput"
     />
     <span class="currency-icon">€</span>
+    <button
+      v-if="props.showIncrementButtons"
+      class="increment-btn increment-btn--plus"
+      :disabled="props.disabled"
+      @click="increment"
+      type="button"
+      aria-label="Increase value"
+    >
+      <font-awesome-icon :icon="faPlus" />
+    </button>
   </div>
 </template>
 
@@ -106,6 +151,46 @@ function sanitizeOnInput(e: Event) {
   font-weight: 600;
   color: var(--primary);
   margin-right: 10px;
+}
+
+.increment-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: var(--overlay-md);
+  color: var(--text-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-size: 0.9rem;
+  padding: 0;
+
+  &:hover:not(:disabled) {
+    background-color: var(--overlay-lg);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+    background-color: var(--overlay-md);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--minus {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  &--plus {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
 }
 
 .base-input {
